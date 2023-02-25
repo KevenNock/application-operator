@@ -1,0 +1,31 @@
+apiVersion: apps.danielhu.cn/v1
+kind: Application
+metadata:
+  name: application-sample
+  namespace: default
+  labels:
+    app: nginx
+spec:
+  deployment:
+    selector:
+      matchLabels:
+        app: nginx
+    template:
+      metadata:
+        labels:
+          app: nginx
+      spec:
+        containers:
+          - name: nginx
+            image: nginx:alpine
+            ports:
+              - containerPort: 80
+  service:
+    selector:
+      app: nginx
+    ports:
+      - protocol: TCP
+        port: 80
+        targetPort: 80
+        nodePort: 30080
+    type: NodePort
